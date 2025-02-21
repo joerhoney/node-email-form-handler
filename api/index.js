@@ -24,18 +24,17 @@ export default async function handler(req, res) {
   try {
     await transporter.sendMail({
       from: `"${name}" <${email}>`,
+      replyTo: `${name} <${replyTo || email}>`,
       to: process.env.RECIPIENT_EMAIL,
       subject: "New Contact Form Submission",
       text: message,
     });
 
-    return res
-      .status(200)
-      .json({
-        success: true,
-        message: "Email sent successfully!",
-        replyTo: replyTo,
-      });
+    return res.status(200).json({
+      success: true,
+      message: "Email sent successfully!",
+      replyTo: replyTo,
+    });
   } catch (error) {
     console.error("Email Error:", error);
     return res.status(500).json({ success: false, message: error.message });
