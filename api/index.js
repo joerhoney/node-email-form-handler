@@ -20,6 +20,10 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+app.get("/", (req, res) => {
+  res.json({ message: "API is running!" });
+});
+
 app.post("/send", async (req, res) => {
   try {
     const { name, email, message } = req.body;
