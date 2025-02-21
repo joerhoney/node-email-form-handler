@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ message: "Method Not Allowed" });
   }
 
-  const { name, email, message } = req.body;
+  const { name, email, message, replyTo } = req.body;
 
   if (!name || !email || !message) {
     return res.status(400).json({ message: "Missing required fields" });
@@ -31,7 +31,11 @@ export default async function handler(req, res) {
 
     return res
       .status(200)
-      .json({ success: true, message: "Email sent successfully!" });
+      .json({
+        success: true,
+        message: "Email sent successfully!",
+        replyTo: replyTo,
+      });
   } catch (error) {
     console.error("Email Error:", error);
     return res.status(500).json({ success: false, message: error.message });
